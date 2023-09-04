@@ -10,8 +10,6 @@ namespace Data
         }
 
         public DbSet<Person> People { get; set; }
-        // protected override void OnConfiguring(DbContextOptionsBuilder options) =>
-        //     options.UseInMemoryDatabase(databaseName: "CQRSDb");
     }
 }
 

@@ -1,3 +1,4 @@
+using cqrs_example;
 using Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,11 @@ builder.Services.AddDbContext<CQRSDBContext>(options => {
     
     options.UseSqlite(connectionString);
 });
+
+builder.Services.AddTransient<CQRSDBContext>();
+builder.Services.AddScoped<ICommandHandler, CommandHandler>();
+builder.Services.AddScoped<ICommandValidator, CommandValidator>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -35,3 +41,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
