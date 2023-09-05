@@ -21,6 +21,10 @@ namespace Controllers
         public async Task<ActionResult> Post([FromBody] CreatePersonCommand command)
         {
             var person = await _commandHandler.HandleCreatePerson(command);
+            if (person == null)
+            {
+                return BadRequest();
+            }
             return Ok(person);
         }
     }
