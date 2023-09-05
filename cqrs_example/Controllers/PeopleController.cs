@@ -27,5 +27,16 @@ namespace Controllers
             }
             return Ok(person);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> Put([FromQuery] Guid personId, [FromBody] RecordBirthCommand command)
+        {
+            var person= await _commandHandler.HandleUpdatePerson(personId, command);
+            if (person == null)
+            {
+                return BadRequest();
+            }
+            return Ok(person);
+        }
     }
 }

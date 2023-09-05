@@ -23,3 +23,14 @@ RUNNING
 1. Clone repo
 2. Run `dotnet build`
 3. Run `dotnet run`
+
+TESTS
+--------------------
+This project contains both unit and integration tests
+
+NEXT STEPS
+--------------------
+Replace SQLite with a production ready database (MS SQL, mySQL, Postgres)
+Add Repository layer abstracting DbContext
+Extend PUT endpoint to support more than just adding birth (i.e. Gender, GivenName, SurName, DeathDate, DeathLocation)
+- Rename `RecordBirthCommand` to `UpdatePersonCommand`

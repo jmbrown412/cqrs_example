@@ -18,4 +18,15 @@ public class CommandValidator : ICommandValidator
 
         return valid;
     }
+
+    public bool ValidateUpdatePersonCommand(RecordBirthCommand command)
+    {
+        bool valid = true;
+
+        if (command.BirthDate == null || command.BirthLocation == null){
+            valid = false;
+        }
+
+        return valid;
+    }
 }

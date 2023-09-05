@@ -10,7 +10,7 @@ public class CommandHandler : ICommandHandler
     private readonly ICommandValidator _commandValidator;
     private readonly ILogger<ICommandHandler> _logger;
 
-    public CommandHandler(CQRSDBContext dbContext, ICommandValidator commandValidator, ILogger<CommandHandler> logger)
+    public CommandHandler(CQRSDBContext dbContext, ICommandValidator commandValidator, ILogger<ICommandHandler> logger)
     {
         _dbContext = dbContext;
         _commandValidator = commandValidator;
@@ -51,6 +51,41 @@ public class CommandHandler : ICommandHandler
         catch (Exception ex)
         {
             _logger.LogError($"There was an error creating a person. {ex.Message}");
+            throw;
+        }
+    }
+
+    public async Task<Person?> HandleUpdatePerson(Guid personId, RecordBirthCommand command)
+    {
+        try
+        {
+            _logger.LogInformation($"Received request to update Person");
+            bool valid = _commandValidator.ValidateUpdatePersonCommand(command);
+            if (valid)
+            {
+                Person? person = _dbContext.People.FirstOrDefault(x => x.Id == personId);
+                if (person != null)
+                {
+                    person.BirthDate = command.BirthDate.Value;
+                    person.BirthLocation = command.BirthLocation;
+                    _dbContext.Attach(person);
+                    _dbContext.Entry(person).Property("BirthDate").IsModified = true;
+                    _dbContext.Entry(person).Property("BirthLocation").IsModified = true;
+                    _dbContext.SaveChanges();
+                    return person;
+                }
+                _logger.LogWarning($"Could not find Person with Id {personId} in the database.");
+                return null;
+            }
+            else
+            {
+                _logger.LogWarning("UpdatePersonCommand failed validation");
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"There was an error updating a person. {ex.Message}");
             throw;
         }
     }

@@ -5,4 +5,5 @@ namespace cqrs_example;
 public interface ICommandValidator
 {
     bool ValidateCreatePersonCommand(CreatePersonCommand command);
+    bool ValidateUpdatePersonCommand(RecordBirthCommand command);
 }
