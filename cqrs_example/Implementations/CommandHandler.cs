@@ -8,17 +8,20 @@ public class CommandHandler : ICommandHandler
 {
     private readonly CQRSDBContext _dbContext;
     private readonly ICommandValidator _commandValidator;
+    private readonly ILogger<ICommandHandler> _logger;
 
-    public CommandHandler(CQRSDBContext dbContext, ICommandValidator commandValidator)
+    public CommandHandler(CQRSDBContext dbContext, ICommandValidator commandValidator, ILogger<CommandHandler> logger)
     {
         _dbContext = dbContext;
         _commandValidator = commandValidator;
+        _logger = logger;
     }
 
     public async Task<Person?> HandleCreatePerson(CreatePersonCommand command)
     {
         try
         {
+            _logger.LogInformation("Received request to create person");
             Person person = new Person
             {
                 Id = Guid.NewGuid(),
@@ -33,10 +36,12 @@ public class CommandHandler : ICommandHandler
 
             _dbContext.People.Add(person);
             await _dbContext.SaveChangesAsync();
+            _logger.LogInformation($"Successfully created and saved Person with Id {person.Id}");
             return person;
         }
         catch (Exception ex)
         {
+            _logger.LogError($"There was an error creating a person. {ex.Message}");
             throw;
         }
     }
