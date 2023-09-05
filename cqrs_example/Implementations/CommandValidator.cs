@@ -8,10 +8,10 @@ public class CommandValidator : ICommandValidator
     {
         bool valid = true;
 
-        if (string.IsNullOrEmpty(command.GivenName)){
+        if (string.IsNullOrEmpty(command.GivenName) || string.IsNullOrEmpty(command.Surname)){
             valid = false;
         }
-        else if (string.IsNullOrEmpty(command.Surname))
+        else if (command.Surname == null)
         {
             valid = false;
         }
