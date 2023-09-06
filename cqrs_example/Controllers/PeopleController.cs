@@ -41,7 +41,7 @@ namespace Controllers
             return Ok(person);
         }
 
-        [HttpPut]
+        [HttpGet]
         public async Task<ActionResult> Get()
         {
             GetAllPeopleQuery query = new GetAllPeopleQuery();
@@ -51,6 +51,18 @@ namespace Controllers
                 return BadRequest();
             }
             return Ok(people);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetByPersonId([FromQuery] Guid personId)
+        {
+            GetPersonByIdQuery query = new GetPersonByIdQuery(personId);
+            var person = await _queryHandler.HandleGetPersonById(query);
+            if (person == null)
+            {
+                return BadRequest();
+            }
+            return Ok(person);
         }
     }
 }

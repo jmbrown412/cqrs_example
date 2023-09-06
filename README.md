@@ -26,11 +26,12 @@ RUNNING
 
 TESTS
 --------------------
-This project contains both unit and integration tests
+This project contains unit tests
 
 NEXT STEPS
 --------------------
-Replace SQLite with a production ready database (MS SQL, mySQL, Postgres)
-Add Repository layer abstracting DbContext
-Extend PUT endpoint to support more than just adding birth (i.e. Gender, GivenName, SurName, DeathDate, DeathLocation)
-- Rename `RecordBirthCommand` to `UpdatePersonCommand`
+* Replace SQLite with a production ready database (MS SQL, mySQL, Postgres)
+* Add Repository layer abstracting DbContext
+* Extend PUT endpoint to support more than just adding birth (i.e. Gender, GivenName, SurName, DeathDate, DeathLocation)
+* Rename `RecordBirthCommand` to `UpdatePersonCommand`
+* Add an integration test project

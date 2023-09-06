@@ -47,8 +47,26 @@ public class QueryHandlerTests
     {
         var query = new GetAllPeopleQuery();
 
-        List<Person> people = await _queryHandler.HandleGetAllPeopleQuery(query);
+        List<Person>? people = await _queryHandler.HandleGetAllPeopleQuery(query);
         Assert.NotNull(people);
         Assert.True(people.Contains(_person));
+        foreach (var person in people)
+        {
+            Assert.NotNull(person.Id);
+            Assert.NotNull(person.GivenName);
+            Assert.NotNull(person.Surname);
+            Assert.NotNull(person.Gender);
+            Assert.NotNull(person.BirthDate);
+            Assert.NotNull(person.BirthLocation);
+        }
+    }
+
+    [Fact]
+    public async void TestGetPersonById()
+    {
+        var query = new GetPersonByIdQuery(_personId);
+
+        Person? person = await _queryHandler.HandleGetPersonById(query);
+        Assert.Equal(_person, person);
     }
 }
