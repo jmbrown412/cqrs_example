@@ -1,7 +1,5 @@
 using System.Text;
-using cqrs_example;
 using cqrs_example.Commands;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Models;
 using Newtonsoft.Json;
 
